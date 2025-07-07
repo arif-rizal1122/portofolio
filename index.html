@@ -1,820 +1,280 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Arif Rizal - Backend Developer</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --dark-bg: #0a0e27;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --text-light: #8892b0;
-      --text-bright: #ccd6f6;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--dark-bg);
-      color: var(--text-bright);
-      overflow-x: hidden;
-    }
-
-    /* Animated background */
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, #0a0e27, #1a1a2e, #16213e);
-      z-index: -2;
-    }
-
-    .animated-bg::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(180deg); }
-    }
-
-    /* Glass morphism navbar */
-    .navbar {
-      background: rgba(10, 14, 39, 0.8) !important;
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--glass-border);
-      transition: all 0.3s ease;
-    }
-
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.5rem;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-link {
-      color: var(--text-bright) !important;
-      font-weight: 500;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--accent-gradient);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
-    }
-
-    /* Hero section */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      text-align: center;
-      z-index: 2;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .hero-avatar {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 4px solid transparent;
-      background: var(--primary-gradient);
-      padding: 4px;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      animation: pulse 2s infinite;
-    }
-
-    .hero-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
-      70% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.5rem);
-      color: var(--text-light);
-      margin-bottom: 2rem;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-      color: var(--text-light);
-      font-style: italic;
-      margin-bottom: 2rem;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-gradient {
-      background: var(--primary-gradient);
-      border: none;
-      padding: 12px 30px;
-      border-radius: 50px;
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-gradient::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn-gradient:hover::before {
-      left: 100%;
-    }
-
-    .btn-gradient:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    }
-
-    .btn-outline-gradient {
-      background: transparent;
-      border: 2px solid;
-      border-image: var(--primary-gradient) 1;
-      padding: 10px 28px;
-      border-radius: 50px;
-      color: var(--text-bright);
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .btn-outline-gradient:hover {
-      background: var(--primary-gradient);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    /* Section styling */
-    .section {
-      padding: 100px 0;
-      position: relative;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 4rem;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      width: 80px;
-      height: 4px;
-      background: var(--accent-gradient);
-      transform: translateX(-50%);
-      border-radius: 2px;
-    }
-
-    /* Glass cards */
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 2rem;
-      height: 100%;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--primary-gradient);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
-    }
-
-    .glass-card:hover::before {
-      opacity: 0.1;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Projects section */
-    .project-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      transition: all 0.3s ease;
-    }
-
-    .project-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .project-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .project-card:hover .project-image {
-      transform: scale(1.1);
-    }
-
-    .project-content {
-      padding: 1.5rem;
-    }
-
-    .project-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-bright);
-    }
-
-    .project-description {
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    /* Skills section */
-    .skill-icon {
-      font-size: 2rem;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
-    }
-
-    .skill-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .skill-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.8rem;
-      color: var(--text-light);
-    }
-
-    .skill-item i {
-      color: #4facfe;
-      margin-right: 0.5rem;
-    }
-
-    /* Contact form */
-    .contact-form {
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 2rem;
-    }
-
-    .form-control {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      color: var(--text-bright);
-      padding: 12px;
-    }
-
-    .form-control:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #4facfe;
-      box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
-      color: var(--text-bright);
-    }
-
-    .form-label {
-      color: var(--text-bright);
-      font-weight: 500;
-    }
-
-    /* Footer */
-    .footer {
-      background: var(--dark-bg);
-      border-top: 1px solid var(--glass-border);
-      padding: 2rem 0;
-      text-align: center;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 50%;
-      color: var(--text-bright);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .social-link:hover {
-      background: var(--primary-gradient);
-      color: white;
-      transform: translateY(-3px);
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .hero-content {
-        padding: 0 15px;
-      }
-      
-      .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .section {
-        padding: 60px 0;
-      }
-    }
-
-    /* Smooth scrolling */
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--dark-bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--primary-gradient);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-gradient);
-    }
-  </style>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- my css -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <title>My Portfolio | Arif Rizal</title>
 </head>
-<body>
-  <!-- Animated background -->
-  <div class="animated-bg"></div>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top">
+<body id="home">
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top bg-primary">
     <div class="container">
-      <a class="navbar-brand" href="#home">Arif Rizal</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="#">Arif Rizal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#home">Home</a>
+            <a class="nav-link active" aria-current="page" href="#home">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#about">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#skills">Skills</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#projects">Projects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#contact">Contact</a>
+            <a class="nav-link" href="#contacts">Contacts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills">Skills</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <!-- akhir navbar -->
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <div class="hero-avatar mx-auto">
-        <img src="https://via.placeholder.com/200x200/667eea/ffffff?text=AR" alt="Arif Rizal">
+  <!-- jumbotron -->
+  <section class="jumbotron text-center">
+    <img src="img/profile.jpg" alt="" width="400" class="rounded-circle img-thumbnail">
+    <h1 class="display-4">Arif Rizal!</h1>
+    <p class="lead">BACK END DEV | Siap Menciptakan Keamanan, Kemudahan, dan Kenyamanan Bagi Anda</p>
+    <p class="fs-5">"Kemampuan untuk belajar adalah keterampilan paling penting dalam hidup manusia." - <em>Stephen Hawking</em></p>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#fff" fill-opacity="1" d="M0,288L48,261.3C96,235,192,181,288,181.3C384,181,480,235,576,224C672,213,768,139,864,128C960,117,1056,171,1152,186.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+  </section>
+  <!-- akhir jumbotron -->
+
+  <!-- about -->
+  <section id="about" class="bg-light py-5">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col">
+          <h2 class="display-4">About Me</h2>
+        </div>
       </div>
-      <h1 class="hero-title">Arif Rizal</h1>
-      <p class="hero-subtitle">Backend Developer</p>
-      <p class="hero-description">
-        "Kemampuan untuk belajar adalah keterampilan paling penting dalam hidup manusia." - Stephen Hawking
-      </p>
-      <div class="cta-buttons">
-        <a href="#projects" class="btn-gradient">View My Work</a>
-        <a href="#contact" class="btn-outline-gradient">Get In Touch</a>
+      <div class="row justify-content-center fs-5 text-center">
+        <div class="col-md-6 col-lg-4 mb-4">
+          <p>Saya Seorang BACKEND dev Siap Menciptakan Keamanan, Kemudahan dan Kenyamanan Bagi Anda</p>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <p>Mari Ciptakan Sama-Sama Sesuatu Yang Luar Biasa Dengan Kode</p>
+        </div>
       </div>
     </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#e2edff" fill-opacity="1" d="M0,288L48,261.3C96,235,192,181,288,181.3C384,181,480,235,576,224C672,213,768,139,864,128C960,117,1056,171,1152,186.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
   </section>
+  <!-- akhir about -->
 
-  <!-- About Section -->
-  <section id="about" class="section">
+  <!-- Projects -->
+  <section id="projects">
     <div class="container">
-      <h2 class="section-title">About Me</h2>
+      <div class="row text-center mb-3">
+        <div class="col">
+          <h2>My Projects</h2>
+        </div>
+      </div>
       <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="glass-card text-center">
-            <p class="lead mb-4">
-              Saya adalah seorang Backend Developer yang berfokus pada menciptakan solusi yang aman, mudah digunakan, dan nyaman untuk pengguna. Dengan pengalaman dalam berbagai teknologi backend, saya siap membantu mewujudkan visi digital Anda.
-            </p>
-            <p class="mb-0">
-              Mari bersama-sama menciptakan sesuatu yang luar biasa dengan kode yang berkualitas dan inovasi yang berkelanjutan.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section id="skills" class="section">
-    <div class="container">
-      <h2 class="section-title">My Skills</h2>
-      <div class="row g-4">
-        <div class="col-lg-4 col-md-6">
-          <div class="glass-card text-center">
-            <i class="bi bi-code-slash skill-icon"></i>
-            <h4 class="mb-3">Backend Development</h4>
-            <ul class="skill-list">
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                PHP & Laravel
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Go & Fiber
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                RESTful APIs
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Microservices
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="glass-card text-center">
-            <i class="bi bi-database skill-icon"></i>
-            <h4 class="mb-3">Database Management</h4>
-            <ul class="skill-list">
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                MySQL
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                PostgreSQL
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                SQLite
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Database Design
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="glass-card text-center">
-            <i class="bi bi-gear skill-icon"></i>
-            <h4 class="mb-3">Tools & Integration</h4>
-            <ul class="skill-list">
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Postman
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                API Integration
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Git & GitHub
-              </li>
-              <li class="skill-item">
-                <i class="bi bi-check-circle-fill"></i>
-                Authentication
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h2 class="section-title">My Projects</h2>
-      <div class="row g-4">
-        <div class="col-lg-4 col-md-6">
-          <div class="project-card">
-            <img src="https://via.placeholder.com/400x200/4facfe/ffffff?text=Dashboard" alt="Dashboard Project" class="project-image">
-            <div class="project-content">
-              <h5 class="project-title">Dashboard Access Level</h5>
-              <p class="project-description">
-                Sistem dashboard dengan level akses yang berbeda untuk mengelola data dan pengguna dengan keamanan tinggi.
-              </p>
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+          <div class="card shadow">
+            <img src="img/project1.png" class="card-img-top img-fluid" alt="Project 1">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Project 1</h5>
+              <p class="card-text">DAHBOARD level Akses Project From UMB</p>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="project-card">
-            <img src="https://via.placeholder.com/400x200/f093fb/ffffff?text=Auth" alt="Authentication Project" class="project-image">
-            <div class="project-content">
-              <h5 class="project-title">Authentication System</h5>
-              <p class="project-description">
-                Sistem autentikasi dan otorisasi lengkap dengan fitur login, register, dan manajemen session.
-              </p>
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+          <div class="card shadow">
+            <img src="img/project2.png" class="card-img-top img-fluid" alt="Project 2">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Project 2</h5>
+              <p class="card-text">LOGIN FITUR (Authenticate & Authorizarion)</p>
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="project-card">
-            <img src="https://via.placeholder.com/400x200/667eea/ffffff?text=API" alt="API Repository" class="project-image">
-            <div class="project-content">
-              <h5 class="project-title">API Repository</h5>
-              <p class="project-description">
-                Koleksi API yang dibangun dengan Golang dan Laravel untuk berbagai kebutuhan aplikasi.
-              </p>
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+          <div class="card shadow">
+            <img src="img/project3.png" class="card-img-top img-fluid" alt="Project 3">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Project 3</h5>
+              <p class="card-text">Repository Golang API and Laravel</p>
             </div>
           </div>
         </div>
+        <!-- Repeat for other projects -->
       </div>
     </div>
   </section>
+  <!-- End Projects -->
 
-  <!-- Contact Section -->
-  <section id="contact" class="section">
+  <!-- Skills -->
+  <section id="skills">
     <div class="container">
-      <h2 class="section-title">Get In Touch</h2>
+      <div class="row text-center mb-3">
+        <div class="col">
+          <h2>My Skills</h2>
+        </div>
+      </div>
       <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="contact-form">
-            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
-              <strong>Terima Kasih!</strong> Pesan Anda telah kami terima.
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Backend Development</h5>
+              <ul class="list-unstyled card-text">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> PHP</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> GO</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> Laravel</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> Fiber</li>
+              </ul>
             </div>
-            <form name="bootPort">
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="nama" name="nama" required>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-              </div>
-              <div class="mb-3">
-                <label for="pesan" class="form-label">Pesan</label>
-                <textarea name="pesan" class="form-control" id="pesan" rows="5" required></textarea>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn-gradient btn-kirim">
-                  <i class="bi bi-send me-2"></i>Send Message
-                </button>
-                <button class="btn-gradient btn-loading d-none" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm me-2"></span>
-                  Sending...
-                </button>
-              </div>
-            </form>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">Database Management</h5>
+              <ul class="list-unstyled card-text">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> Mysql</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> PostgresSql</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> Postman</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary"></i> Sqlite</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">API Integration</h5>
+              <p class="card-text">Experience with integrating third-party APIs.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <!-- End Skills -->
 
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- Links -->
+  <section id="links">
     <div class="container">
-      <div class="social-links">
-        <a href="https://www.cakeresume.com/arif-rizall" class="social-link" target="_blank">
-          <i class="bi bi-file-earmark-person"></i>
-        </a>
-        <a href="https://github.com/arif-rizal1122" class="social-link" target="_blank">
-          <i class="bi bi-github"></i>
-        </a>
-        <a href="https://wa.me/085174352719" class="social-link" target="_blank">
-          <i class="bi bi-whatsapp"></i>
-        </a>
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-body text-center">
+              <h5 class="card-title">Links</h5>
+              <ul class="list-unstyled mb-0">
+                <li class="mb-3">
+                  <a href="https://www.cakeresume.com/arif-rizall" class="text-dark text-decoration-none">
+                    <i class="bi bi-file-earmark-person"></i> CV
+                  </a>
+                </li>
+                <li class="mb-3">
+                  <a href="https://github.com/arif-rizal1122" class="text-dark text-decoration-none">
+                    <i class="bi bi-github"></i> GitHub
+                  </a>
+                </li>
+                <li class="mb-3">
+                  <a href="https://wa.me/085174352719" class="text-dark text-decoration-none">
+                    <i class="bi bi-whatsapp"></i> WhatsApp
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="mb-0">
-        Created with <i class="bi bi-heart-fill text-danger"></i> by 
-        <a href="https://github.com/arif-rizal1122" class="text-decoration-none" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-          Arif Rizal
-        </a>
-      </p>
     </div>
+  </section>
+  <!-- End Links -->
+
+  <!-- contact -->
+  <section id="contacts">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col">
+          <h2>Contact Me</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+          <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+            <strong>Terima Kasih!</strong> Pesan anda telah kami terima.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <form name="bootPort">
+            <div class="mb-3">
+              <label for="nama" class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-control" id="nama" aria-describedby="nama" name="nama">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="email" name="email">
+            </div>
+            <div class="mb-3">
+              <label for="pesan" class="form-label">Pesan</label>
+              <textarea name="pesan" class="form-control" id="pesan" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+            <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0d6efd" fill-opacity="1" d="M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,176C672,192,768,192,864,192C960,192,1056,192,1152,186.7C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+  </section>
+  <!-- akhir contact -->
+
+  <!-- footer -->
+  <footer class="bg-primary text-white text-center p-4">
+    <p>Created With Love <i class="bi bi-heartbreak text-danger"></i> | <a class="text-white fw-bold" href="https://github.com/arif-rizal1122">By Arif Rizal</a> </p>
   </footer>
+  <!-- akhir footer -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <!-- form trigger -->
   <script>
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-
-    // Active nav link on scroll
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section');
-      const navLinks = document.querySelectorAll('.nav-link');
-      
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    });
-
-    // Form handling
     const scriptURL = 'https://script.google.com/macros/s/AKfycbz9e3JVpRFJ5MT7cY7_9gi5b8R7GEanebd1TFAGURmJ9St_GbOr_w0muyOidh3pgmR5cA/exec';
     const form = document.forms['bootPort'];
     const btnKirim = document.querySelector('.btn-kirim');
     const btnLoading = document.querySelector('.btn-loading');
     const myAlert = document.querySelector('.my-alert');
-
+  
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      
-      // Show loading button
-      btnLoading.classList.remove('d-none');
-      btnKirim.classList.add('d-none');
-      
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => {
-          // Show success alert
-          myAlert.classList.remove('d-none');
-          console.log('Success!', response);
-          
-          // Hide loading, show send button
-          btnLoading.classList.add('d-none');
-          btnKirim.classList.remove('d-none');
-          
-          // Reset form
-          form.reset();
-        })
-        .catch(error => {
-          console.error('Error!', error.message);
-          
-          // Hide loading, show send button
-          btnLoading.classList.add('d-none');
-          btnKirim.classList.remove('d-none');
-        });
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
+    e.preventDefault();
+    // tampilkan tombol loading, hilangkan tombol kirim
+    btnLoading.classList.toggle('d-none');
+    btnKirim.classList.toggle('d-none');
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        // tampilkan alert
+        myAlert.classList.toggle('d-none');
+        console.log('Success!', response);
+        // sembunyikan tombol loading, tampilkan tombol kirim
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+        form.reset();  // This line resets the form
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        // sembunyikan tombol loading, tampilkan tombol kirim
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
       });
-    }, observerOptions);
-
-    // Observe all cards for animation
-    document.querySelectorAll('.glass-card, .project-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(30px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(card);
-    });
+   });
   </script>
+  <!-- end form trigger -->
 </body>
 </html>
